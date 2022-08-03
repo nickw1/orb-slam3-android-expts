@@ -1,0 +1,2 @@
+/home/nick/src/emsdk/upstream/emscripten/emar qc ../lib/libDBoW2.a CMakeFiles/DBoW2.dir/DBoW2/BowVector.cpp.o CMakeFiles/DBoW2.dir/DBoW2/FORB.cpp.o CMakeFiles/DBoW2.dir/DBoW2/FeatureVector.cpp.o CMakeFiles/DBoW2.dir/DBoW2/ScoringObject.cpp.o CMakeFiles/DBoW2.dir/DUtils/Random.cpp.o CMakeFiles/DBoW2.dir/DUtils/Timestamp.cpp.o
+/home/nick/src/emsdk/upstream/emscripten/emranlib ../lib/libDBoW2.a

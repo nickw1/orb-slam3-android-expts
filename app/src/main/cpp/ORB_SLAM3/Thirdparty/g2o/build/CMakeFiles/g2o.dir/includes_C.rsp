@@ -1,0 +1,1 @@
+-I/home/nick/src/ORB_SLAM3/Thirdparty/g2o/core -I/home/nick/src/ORB_SLAM3/Thirdparty/g2o/types -I/home/nick/src/ORB_SLAM3/Thirdparty/g2o/stuff -I/home/nick/src/emsdk/upstream/emscripten/cache/sysroot/include/eigen3
