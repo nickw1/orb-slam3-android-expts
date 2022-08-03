@@ -10,3 +10,6 @@ An attempt to get ORB-SLAM3 working on Android. Please note that it is ***NOT SU
 
 3. ORB_SLAM2 code replaced by ORB-SLAM3 code taken from the Emscripten port [here](https://github.com/nickw1/ORB_SLAM3/tree/binvoc) - please use the `binvoc` branch. `Thirdparty` libraries also replaced.
 
+## Problems
+
+- Division operator (Matx,float) not recognised e.g. in `LocalMapping.cc` line 628 and `KannalaBrandt8.cpp` line 534. This didn't occur with emscripten: issue with C++ compiler used on Android?

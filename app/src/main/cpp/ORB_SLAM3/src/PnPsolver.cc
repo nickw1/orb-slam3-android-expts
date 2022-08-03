@@ -54,6 +54,7 @@
 #include <opencv2/core/core.hpp>
 #include "Thirdparty/DBoW2/DUtils/Random.h"
 #include <algorithm>
+#include <opencv2/core/core_c.h>
 
 using namespace std;
 

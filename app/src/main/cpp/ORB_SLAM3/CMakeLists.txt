@@ -6,8 +6,8 @@ project(ORB_SLAM3)
 #find_package(OpenCV REQUIRED)
 #include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-add_library(lib_opencv SHARED IMPORTED)
-set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${OpenCV_DIR}/libs/${ANDROID_ABI}/libopencv_java4.so)
+#add_library(lib_opencv SHARED IMPORTED)
+#set_target_properties(lib_opencv PROPERTIES IMPORTED_LOCATION ${OpenCV_DIR}/libs/${ANDROID_ABI}/libopencv_java4.so)
 
 
 # Locate Eigen3
