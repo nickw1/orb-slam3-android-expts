@@ -3,29 +3,27 @@ project(DBoW2)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall  -O3 -march=native")
-
-add_compile_options("SHELL: -s USE_BOOST_HEADERS=1")
-add_link_options("SHELL: -s USE_BOOST_HEADERS=1")
+set(BOOST_INCLUDE_DIR ../../..)
 
 set(HDRS_DBOW2
-  DBoW2/BowVector.h
-  DBoW2/FORB.h 
-  DBoW2/FClass.h       
-  DBoW2/FeatureVector.h
-  DBoW2/ScoringObject.h   
-  DBoW2/TemplatedVocabulary.h)
+        DBoW2/BowVector.h
+        DBoW2/FORB.h
+        DBoW2/FClass.h
+        DBoW2/FeatureVector.h
+        DBoW2/ScoringObject.h
+        DBoW2/TemplatedVocabulary.h)
 set(SRCS_DBOW2
-  DBoW2/BowVector.cpp
-  DBoW2/FORB.cpp      
-  DBoW2/FeatureVector.cpp
-  DBoW2/ScoringObject.cpp)
+        DBoW2/BowVector.cpp
+        DBoW2/FORB.cpp
+        DBoW2/FeatureVector.cpp
+        DBoW2/ScoringObject.cpp)
 
 set(HDRS_DUTILS
-  DUtils/Random.h
-  DUtils/Timestamp.h)
+        DUtils/Random.h
+        DUtils/Timestamp.h)
 set(SRCS_DUTILS
-  DUtils/Random.cpp
-  DUtils/Timestamp.cpp)
+        DUtils/Random.cpp
+        DUtils/Timestamp.cpp)
 
 #find_package(OpenCV 4.0 QUIET)
 #if(NOT OpenCV_FOUND)
@@ -34,17 +32,13 @@ set(SRCS_DUTILS
 #      message(FATAL_ERROR "OpenCV > 3.0 not found.")
 #   endif()
 #endif()
-set(OpenCV_DIR ../../opencv/build_wasm)
-set(opencvdir "/home/nick/src/opencv")
-#opencv
-file ( GLOB opencv_include_modules "${opencvdir}/modules/*/include" )
-file ( GLOB opencv_js "${opencvdir}/build_wasm/lib/*.a" )
-
 
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-include_directories(${opencv_include_modules} "${opencvdir}/include" "${opencvdir}/build_wasm")
+include_directories(${OpenCV_INCLUDE_DIRS} ${BOOST_INCLUDE_DIR})
 add_library(DBoW2 SHARED ${SRCS_DBOW2} ${SRCS_DUTILS})
-target_link_libraries(DBoW2 ${opencv_js})
+target_link_libraries(DBoW2
+        lib_opencv
+        )
 
