@@ -625,10 +625,12 @@ void LocalMapping::CreateNewMapPoints()
                     continue;
 
                 // Euclidean coordinates
-                //x3D = x3D_h.get_minor<3,1>(0,0) / x3D_h(3);
+                x3D = x3D_h.get_minor<3,1>(0,0);
+                for(int row=0; row<3; row++) {
+                    x3D(row, 0) /= x3D_h(3);
+                }
 
                 bEstimated = true;
-                cv::Mat s;
             }
             else if(bStereo1 && cosParallaxStereo1<cosParallaxStereo2)
             {
