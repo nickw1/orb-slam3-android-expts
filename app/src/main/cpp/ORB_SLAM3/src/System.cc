@@ -33,6 +33,9 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 
+
+#include <cstdio>
+
 bool has_suffix(const std::string &str, const std::string &suffix) {
   std::size_t index = str.find(suffix, str.size() - suffix.size());
   return (index != std::string::npos);
@@ -48,6 +51,8 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     mSensor(sensor), mpViewer(static_cast<Viewer*>(NULL)), mbReset(false), mbResetActiveMap(false),
     mbActivateLocalizationMode(false), mbDeactivateLocalizationMode(false)
 {
+    cout << "ORB System constructor..." << endl;
+
     // Output welcome message
     cout << endl <<
     "ORB-SLAM3 Copyright (C) 2017-2020 Carlos Campos, Richard Elvira, Juan J. Gómez, José M.M. Montiel and Juan D. Tardós, University of Zaragoza." << endl <<
@@ -69,7 +74,16 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     else if(mSensor==IMU_STEREO)
         cout << "Stereo-Inertial" << endl;
 
+    // return; // NW check we can run the System before trying to do anything
+    FILE *fp = std::fopen("/data/data/com.example.andorb/Pixel3.yaml", "r");
+    if(fp) {
+        cout << "successfully opened test file";
+        fclose(fp);
+    } else {
+        cout << "did not successfully open test file";
+    }
     //Check settings file
+    cout << "Trying to open file at: " << strSettingsFile << endl;
     cv::FileStorage fsSettings(strSettingsFile.c_str(), cv::FileStorage::READ);
     if(!fsSettings.isOpened())
     {
@@ -90,7 +104,8 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
 	  bVocLoad = mpVocabulary->loadFromTextFile(strVocFile);
 	else
 	  bVocLoad = mpVocabulary->loadFromBinaryFile(strVocFile);
-      
+
+    cout << "Trying to open vocabulary file at: " << strVocFile << endl;
     if(!bVocLoad)
     {
         cerr << "Wrong path to vocabulary. " << endl;

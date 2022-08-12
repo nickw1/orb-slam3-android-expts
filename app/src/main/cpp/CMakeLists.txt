@@ -23,6 +23,8 @@ set_target_properties(lib_opencv_core PROPERTIES IMPORTED_LOCATION ${OpenCV_DIR}
 # Add ORB_SLAM3
 add_subdirectory( ORB_SLAM3 )
 set( ORB_SLAM3_INCLUDE_DIR ORB_SLAM3/include )
+set( ORB_SLAM3_THIRDPARTY_INCLUDE_DIR ORB_SLAM3 )
+set( BOOST_INCLUDE_DIR . )
 
 # Find Eigen3
 SET(EIGEN3_INCLUDE_DIR "ORB_SLAM3/Thirdparty/eigen-3.3.7")
@@ -53,7 +55,11 @@ find_library( # Sets the name of the path variable.
 include_directories(
         ${EIGEN3_INCLUDE_DIR}
         ${OpenCV_INCLUDE_DIRS}
-        ${ORB_SLAM3_INCLUDE_DIR} )
+        ${BOOST_INCLUDE_DIR}
+        ${ORB_SLAM3_THIRDPARTY_INCLUDE_DIR}
+        ${ORB_SLAM3_INCLUDE_DIR}
+        ${ORB_SLAM3_INCLUDE_DIR}/CameraModels
+)
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this

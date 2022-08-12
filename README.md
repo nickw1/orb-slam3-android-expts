@@ -1,6 +1,6 @@
 # ORB-SLAM3 Android
 
-An attempt to get ORB-SLAM3 working on Android. Please note that it builds but **currently does not run** (crash, investigation of cause ongoing)
+An attempt to get ORB-SLAM3 working on Android. Please note that it builds, partially initialises, but then **currently crashes** (crash with `SIGILL` error on emulator, investigation of cause ongoing)
 
 ## Steps to create project
 
