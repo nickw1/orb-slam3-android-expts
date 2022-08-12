@@ -45,7 +45,10 @@ android {
     buildFeatures {
         viewBinding true
     }
-    ndkVersion '24.0.8215888'
+    ndkVersion '24.0.8215888' // original
+    //ndkVersion '21.4.7075529' // matches opencv
+    // This causes IMMEDIATE SIGILL crash
+    // (whereas v24 gets as far as loading config/vocab)
 }
 
 dependencies {

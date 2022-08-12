@@ -61,6 +61,8 @@ extern "C" JNIEXPORT void JNICALL Java_com_example_andorb_MainActivity_shutdownC
 }
 
 
+// Redirect stdout/stderr to logcat
+// see https://codelab.wordpress.com/2014/11/03/how-to-use-standard-output-streams-for-logging-in-android-apps/
 
 static int pfd[2];
 static pthread_t loggingThread;

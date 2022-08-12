@@ -1,6 +1,7 @@
 package com.example.andorb
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -20,8 +21,7 @@ class MainActivity : CameraActivity() {
                 LoaderCallbackInterface.SUCCESS -> {
                     Log.i("ORB_SLAM_LOG", "OpenCV loaded successfully")
                     jcv1?.enableView()
-                    //val fsRoot = Environment.getExternalStorageDirectory().absolutePath
-                    val fsRoot = "/data/data/com.example.andorb"
+                    val fsRoot = this@MainActivity.applicationInfo.dataDir
                     if (!cppInit) {
                         Log.d("ORB_SLAM_LOG", "Initialising C++")
                         val str = initCPP(fsRoot)

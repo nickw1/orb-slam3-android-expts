@@ -74,14 +74,8 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     else if(mSensor==IMU_STEREO)
         cout << "Stereo-Inertial" << endl;
 
-    // return; // NW check we can run the System before trying to do anything
-    FILE *fp = std::fopen("/data/data/com.example.andorb/Pixel3.yaml", "r");
-    if(fp) {
-        cout << "successfully opened test file";
-        fclose(fp);
-    } else {
-        cout << "did not successfully open test file";
-    }
+    // return;
+
     //Check settings file
     cout << "Trying to open file at: " << strSettingsFile << endl;
     cv::FileStorage fsSettings(strSettingsFile.c_str(), cv::FileStorage::READ);
@@ -124,8 +118,9 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
         mpAtlas->SetInertialSensor();
 
     //Create Drawers. These are used by the Viewer
+    // This call is causing the SIGILL crash in <memory>
     mpFrameDrawer = new FrameDrawer(mpAtlas);
-//    mpMapDrawer = new MapDrawer(mpAtlas, strSettingsFile);
+ //    mpMapDrawer = new MapDrawer(mpAtlas, strSettingsFile);
 
     //Initialize the Tracking thread
     //(it will live in the main thread of execution, the one that called this constructor)

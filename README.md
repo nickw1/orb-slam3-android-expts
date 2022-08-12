@@ -12,4 +12,6 @@ An attempt to get ORB-SLAM3 working on Android. Please note that it builds, part
 
 ## Problems
 
+- Currently crashes on x64 emulator, see [here](SIGILL_crash.txt) for stack trace.
+
 - Division operator (Matx,float) not recognised e.g. in `LocalMapping.cc` line 628 and `KannalaBrandt8.cpp` line 534. This didn't occur with emscripten: issue with C++ compiler used on Android? Replaced with code to divide individual values within matrix.

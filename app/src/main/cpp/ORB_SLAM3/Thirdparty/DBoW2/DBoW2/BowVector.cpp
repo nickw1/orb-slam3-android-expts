@@ -19,7 +19,7 @@ namespace DBoW2 {
 
 // --------------------------------------------------------------------------
 
-BowVector::BowVector(void)
+BowVector::BowVector(void) // THIS is causing the SIGILL crash
 {
 }
 
