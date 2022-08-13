@@ -22,6 +22,7 @@ class MainActivity : CameraActivity() {
                     Log.i("ORB_SLAM_LOG", "OpenCV loaded successfully")
                     jcv1?.enableView()
                     val fsRoot = this@MainActivity.applicationInfo.dataDir
+                    //val fsRoot = "/storage/emulated/0"
                     if (!cppInit) {
                         Log.d("ORB_SLAM_LOG", "Initialising C++")
                         val str = initCPP(fsRoot)
