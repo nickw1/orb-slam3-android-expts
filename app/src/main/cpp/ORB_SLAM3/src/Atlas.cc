@@ -60,7 +60,6 @@ void Atlas::CreateNewMap()
     unique_lock<mutex> lock(mMutexAtlas);
     cout << "Creation of new map with id: " << Map::nNextId << endl;
     if(mpCurrentMap){
-        cout << "Exits current map " << endl;
         if(!mspMaps.empty() && mnLastInitKFidMap < mpCurrentMap->GetMaxKFid())
             mnLastInitKFidMap = mpCurrentMap->GetMaxKFid()+1; //The init KF is the next of current maximum
 
@@ -80,7 +79,7 @@ void Atlas::CreateNewMap()
 void Atlas::ChangeMap(Map* pMap)
 {
     unique_lock<mutex> lock(mMutexAtlas);
-    cout << "Chage to map with id: " << pMap->GetId() << endl;
+    cout << "Change to map with id: " << pMap->GetId() << endl;
     if(mpCurrentMap){
         mpCurrentMap->SetStoredMap();
     }
@@ -120,10 +119,10 @@ void Atlas::AddCamera(GeometricCamera* pCam)
 
 void Atlas::SetReferenceMapPoints(const std::vector<MapPoint*> &vpMPs)
 {
-    cout << "** Atlas::SetReferenceMapPoints()" << endl;
+
     unique_lock<mutex> lock(mMutexAtlas);
     mpCurrentMap->SetReferenceMapPoints(vpMPs);
-    cout << "** Atlas::SetReferenceMapPoints(): done" << endl;
+
 }
 
 void Atlas::InformNewBigChange()

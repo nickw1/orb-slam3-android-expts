@@ -1761,7 +1761,7 @@ void Tracking::Track()
 
     if(mState==NOT_INITIALIZED)
     {
-        cout << "**** HANDLING NOT_INITIALIZED STATE" << endl;
+        cout << "**** Tracking::Track(): HANDLING NOT_INITIALIZED STATE" << endl;
         if(mSensor==System::STEREO || mSensor==System::RGBD || mSensor==System::IMU_STEREO)
             StereoInitialization();
         else
@@ -1784,7 +1784,7 @@ void Tracking::Track()
     }
     else
     {
-        cout << "**** NOW INITIALISED" << endl;
+        cout << "**** Tracking::Track(): NOW INITIALISED" << endl;
         // System is initialized. Track Frame.
         bool bOK;
 
@@ -1801,7 +1801,7 @@ void Tracking::Track()
             // you explicitly activate the "only tracking" mode.
             if(mState==OK)
             {
-                cout << "**** Doing tracking" << endl;
+                cout << "**** Tracking::Track(): Doing tracking" << endl;
                 // Local Mapping might have changed some MapPoints tracked in last frame
                 CheckReplacedInLastFrame();
 
@@ -2387,7 +2387,7 @@ void Tracking::MonocularInitialization()
 
 void Tracking::CreateInitialMapMonocular()
 {
-    cout << "**** CreateInitialMapMonocular()" << endl;
+
     // Create KeyFrames
     cout << "** Creating initial keyframe" << endl;
     KeyFrame* pKFini = new KeyFrame(mInitialFrame,mpAtlas->GetCurrentMap(),mpKeyFrameDB);

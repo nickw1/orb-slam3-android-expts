@@ -130,10 +130,8 @@ void Map::EraseKeyFrame(KeyFrame *pKF)
 
 void Map::SetReferenceMapPoints(const vector<MapPoint *> &vpMPs)
 {
-    cout << "**Map:SetReferenceMapPoints()" << endl;
     unique_lock<mutex> lock(mMutexMap);
     mvpReferenceMapPoints = vpMPs;
-    cout << "**Map:SetReferenceMapPoints(): done" << endl;
 }
 
 void Map::InformNewBigChange()
