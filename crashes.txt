@@ -1,4 +1,54 @@
-Stack trace for SIGILL error. Appears to be something in the c++ standard library, called when BowVector constructor is called (this inherits std::map)
+22-08-22:
+
+Getting segfault from calling MonocularInitialization() in Tracking.cc, but stack trace not giving any more info (does not descend into this method):
+
+art_sigsegv_fault 0x000000713784b58c
+art::FaultManager::HandleFault(int, siginfo*, void*) 0x000000713784b3f8
+art::SignalChain::Handler(int, siginfo*, void*) 0x00000073df88c328
+<unknown> 0x00000073e51998b0
+ORB_SLAM3::Tracking::Track() Tracking.cc:1769
+ORB_SLAM3::Tracking::Track() Tracking.cc:1769
+ORB_SLAM3::Tracking::GrabImageMonocular(cv::Mat const&, double const&, std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<char> >) Tracking.cc:1379
+ORB_SLAM3::System::TrackMonocular(cv::Mat const&, double const&, std::__ndk1::vector<ORB_SLAM3::IMU::Point, std::__ndk1::allocator<ORB_SLAM3::IMU::Point> > const&, std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<char> >) System.cc:346
+::Java_com_example_andorb_MainActivity_processFrame(JNIEnv *, jobject, jlong) native-lib.cpp:59
+art_quick_generic_jni_trampoline 0x00000071376d4048
+art_quick_invoke_stub 0x00000071376ca768
+art::interpreter::ArtInterpreterToCompiledCodeBridge(art::Thread*, art::ArtMethod*, art::ShadowFrame*, unsigned short, art::JValue*) 0x00000071376ee6b4
+bool art::interpreter::DoCall<false, false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, art::JValue*) 0x000000713780ade8
+void art::interpreter::ExecuteSwitchImplCpp<false, false>(art::interpreter::SwitchImplContext*) 0x000000713761660c
+ExecuteSwitchImplAsm 0x00000071376d69dc
+art::interpreter::ExecuteSwitch(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame&, art::JValue, bool) (.llvm.3351068054637636664) 0x000000713793d098
+art::interpreter::Execute(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame&, art::JValue, bool, bool) (.llvm.3351068054637636664) 0x000000713767ddbc
+art::interpreter::ArtInterpreterToInterpreterBridge(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame*, art::JValue*) 0x000000713775a9e8
+bool art::interpreter::DoCall<false, false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, art::JValue*) 0x000000713780b060
+void art::interpreter::ExecuteSwitchImplCpp<false, false>(art::interpreter::SwitchImplContext*) 0x00000071376166c0
+ExecuteSwitchImplAsm 0x00000071376d69dc
+art::interpreter::ExecuteSwitch(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame&, art::JValue, bool) (.llvm.3351068054637636664) 0x000000713793d098
+art::interpreter::Execute(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame&, art::JValue, bool, bool) (.llvm.3351068054637636664) 0x000000713767ddbc
+art::interpreter::ArtInterpreterToInterpreterBridge(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame*, art::JValue*) 0x000000713775a9e8
+bool art::interpreter::DoCall<false, false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, art::JValue*) 0x000000713780b060
+void art::interpreter::ExecuteSwitchImplCpp<false, false>(art::interpreter::SwitchImplContext*) 0x000000713761660c
+ExecuteSwitchImplAsm 0x00000071376d69dc
+art::interpreter::ExecuteSwitch(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame&, art::JValue, bool) (.llvm.3351068054637636664) 0x000000713793d098
+art::interpreter::Execute(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame&, art::JValue, bool, bool) (.llvm.3351068054637636664) 0x000000713767ddbc
+art::interpreter::ArtInterpreterToInterpreterBridge(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame*, art::JValue*) 0x000000713775a9e8
+bool art::interpreter::DoCall<false, false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, art::JValue*) 0x000000713780b060
+void art::interpreter::ExecuteSwitchImplCpp<false, false>(art::interpreter::SwitchImplContext*) 0x00000071376166c0
+ExecuteSwitchImplAsm 0x00000071376d69dc
+art::interpreter::ExecuteSwitch(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame&, art::JValue, bool) (.llvm.3351068054637636664) 0x000000713793d098
+art::interpreter::Execute(art::Thread*, art::CodeItemDataAccessor const&, art::ShadowFrame&, art::JValue, bool, bool) (.llvm.3351068054637636664) 0x000000713767ddbc
+artQuickToInterpreterBridge 0x000000713767c9ec
+art_quick_to_interpreter_bridge 0x00000071376d417c
+art_quick_invoke_stub 0x00000071376ca768
+art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*) 0x000000713770e984
+art::JValue art::InvokeVirtualOrInterfaceWithJValues<art::ArtMethod*>(art::ScopedObjectAccessAlreadyRunnable const&, _jobject*, art::ArtMethod*, jvalue const*) 0x00000071377c1db8
+art::Thread::CreateCallback(void*) 0x00000071378578f0
+__pthread_start(void*) 0x00000073ddf04914
+__start_thread 0x00000073ddea43f4
+
+22-08-12:
+
+Stack trace for SIGILL error. Appears to be something in the c++ standard library, called when BowVector constructor is called (this inherits std::map). This only occurs on a virtual device, not the real device
 
 std::__ndk1::__compressed_pair_elem<unsigned long, 0, false>::__compressed_pair_elem<int, void>(int&&) memory:2268
 std::__ndk1::__compressed_pair<unsigned long, std::__ndk1::__map_value_compare<unsigned int, std::__ndk1::__value_type<unsigned int, double>, std::__ndk1::less<unsigned int>, true> >::__compressed_pair<int, std::__ndk1::__map_value_compare<unsigned int, std::__ndk1::__value_type<unsigned int, double>, std::__ndk1::less<unsigned int>, true> const&>(int&&, std::__ndk1::__map_value_compare<unsigned int, std::__ndk1::__value_type<unsigned int, double>, std::__ndk1::less<unsigned int>, true> const&) memory:2353

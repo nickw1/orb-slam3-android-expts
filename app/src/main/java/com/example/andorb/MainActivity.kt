@@ -8,9 +8,10 @@ import android.util.Log
 import android.view.SurfaceView
 import android.view.WindowManager
 import org.opencv.android.*
+import org.opencv.core.Mat
 import java.util.*
 
-class MainActivity : CameraActivity() {
+class MainActivity : CameraActivity(), CameraBridgeViewBase.CvCameraViewListener2 {
 
     var jcv1: JavaCameraView? = null
     var cppInit = false
@@ -43,6 +44,7 @@ class MainActivity : CameraActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(R.layout.activity_main)
         jcv1 = findViewById(R.id.jcv1)
+        jcv1?.setCvCameraViewListener(this)
         jcv1?.visibility = SurfaceView.VISIBLE
     }
 
@@ -70,13 +72,29 @@ class MainActivity : CameraActivity() {
         return Collections.singletonList(jcv1)
     }
 
+    override fun onCameraFrame(inputFrame: CameraBridgeViewBase.CvCameraViewFrame?): Mat {
+        inputFrame?.apply {
+            val img = gray()
+            processFrame(img.nativeObjAddr)
+            return img
+        }
+        return Mat()
+    }
+
+    override fun onCameraViewStarted(width: Int, height: Int) {
+
+    }
+
+    override fun onCameraViewStopped() {
+
+    }
 
     /**
      * A native method that is implemented by the 'andorb' native library,
      * which is packaged with this application.
      */
     external fun initCPP(fsRoot: String): String
-    external fun processFrame(): Unit
+    external fun processFrame(addr: Long): Unit
     external fun shutdownCPP(): Unit
 
     companion object {

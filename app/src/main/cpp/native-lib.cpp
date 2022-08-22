@@ -15,6 +15,8 @@
 using namespace std;
 
 ORB_SLAM3::System *slam = NULL;
+vector<double> mapPoints;
+bool isProcessingFrame= false;
 
 void initSystem(const char*);
 static void *loggingFunction(void*);
@@ -26,7 +28,7 @@ Java_com_example_andorb_MainActivity_initCPP(
         jobject /* this */,
         jstring fs_root) {
     const char *c_str = env->GetStringUTFChars(fs_root, 0);
-    std::string hello = "ORB_SLAM3 initialising...";
+    std::string msg = "ORB_SLAM3 initialising...";
 
     runLoggingThread();
 
@@ -36,7 +38,7 @@ Java_com_example_andorb_MainActivity_initCPP(
     struct passwd *pwd = getpwuid(getuid());
     __android_log_print(ANDROID_LOG_INFO, "ORB_SLAM_LOG", "Username %s", pwd->pw_name);
 
-    return env->NewStringUTF(hello.c_str());
+    return env->NewStringUTF(msg.c_str());
 }
 
 void initSystem(const char* c_str) {
@@ -46,9 +48,45 @@ void initSystem(const char* c_str) {
 }
 
 extern "C" JNIEXPORT void JNICALL Java_com_example_andorb_MainActivity_processFrame(
-        JNIEnv *env, jobject
+        JNIEnv *env, jobject, jlong addrGrayImage
         ) {
+    if(isProcessingFrame || slam==NULL) { cout << "Ignoring frame as still processing" << endl; return; }
+    isProcessingFrame = true;
+    cout << "----------------" << endl << "Processing frame" << endl;
+    cv::Mat *gray_image = (cv::Mat*) addrGrayImage;
+    std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+    std::chrono::duration<double, std::milli> dur = t1.time_since_epoch();
+    slam->TrackMonocular(*gray_image, dur.count());
 
+    mapPoints.clear();
+
+    vector<ORB_SLAM3::MapPoint*> points = slam->GetTrackedMapPoints();
+    cout << "Got " << points.size() <<  "tracked map points." << endl;
+    mapPoints.reserve(points.size() * sizeof(double) * 3);
+    int nWorldPosFound = 0;
+    for(int i=0; i<points.size(); i++) {
+        cv::Mat worldPos = points[i]->GetWorldPos();
+        if(worldPos.total() > 0) {
+            nWorldPosFound++;
+            for(int j=0; j<3; j++) {
+                mapPoints.push_back(worldPos.at<double>(j));
+            }
+        }
+    }
+
+    ORB_SLAM3::Atlas *atlas = slam->getAtlas();
+    vector<ORB_SLAM3::MapPoint*> allPoints = atlas->GetAllMapPoints();
+    cout << "From atlas, there are " << allPoints.size() << " points." << endl;
+
+    int nAllWorldPosFound = 0;
+    for(int i=0; i<allPoints.size(); i++) {
+        cv::Mat worldPos = allPoints[i]->GetWorldPos();
+        if(worldPos.total() > 0) {
+            nAllWorldPosFound++;
+        }
+    }
+    cout << "Number of world positions found=" << nWorldPosFound << ". Number of world positions rom atlas found=" << nAllWorldPosFound << endl;
+    isProcessingFrame = false;
 }
 
 extern "C" JNIEXPORT void JNICALL Java_com_example_andorb_MainActivity_shutdownCPP(

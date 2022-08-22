@@ -1766,7 +1766,7 @@ void Tracking::Track()
             StereoInitialization();
         else
         {
-            MonocularInitialization();
+            MonocularInitialization(); // CRASH occurring here currently, see crashes.txt
         }
 
         mpFrameDrawer->Update(this);
